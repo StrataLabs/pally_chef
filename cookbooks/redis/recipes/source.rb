@@ -90,6 +90,10 @@ if node['redis']['source']['create_service']
   end
 
   service "redis" do
+    case node[:platform]
+    when "RedHat"
+      provider Chef::Provider::Service::Init::Redhat
+    end
     supports  :status => false, :restart => false, :reload => false
     action    :enable
   end
